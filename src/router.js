@@ -4,6 +4,7 @@ import App from './App'
 import Home from './pages/home'
 import Admin from './admin'
 import Login from './pages/login'
+import Common from './common'
 import UiButtons from './pages/ui/buttons.js'
 import UiModals from './pages/ui/modals.js'
 import UiLoading from './pages/ui/loading.js'
@@ -21,13 +22,13 @@ import TableBasicCheckbox from './pages/table/basicTableCheckbox.js'
 import TableBasicPaging from './pages/table/basicTablePaging.js'
 import TableHigh from './pages/table/highTable.js'
 import City from './pages/city'
+import Order from './pages/order'
 import NoMatch from './pages/noMatch'
 export default class IRouter extends React.Component{
     render(){
         return (
             <HashRouter>
                 <App>
-                    
                     <Route path="/login" component={Login}></Route>
                     <Route path="/admin" render={() =>
                         <Admin>
@@ -50,11 +51,16 @@ export default class IRouter extends React.Component{
                                 <Route path="/admin/table/basic5" component={TableBasicPaging}></Route>
                                 <Route path="/admin/table/high" component={TableHigh}></Route>
                                 <Route path="/admin/city" component={City}></Route>
+                                <Route path="/admin/order" component={Order}></Route>
                                 <Route component={NoMatch}/>
                             </Switch>
                         </Admin>
                     }></Route>
-                    <Route path="/order/detail" component={Login}></Route>
+                    <Route path="/common" render={() => 
+                        <Common>
+                            <Route path="/common/order/detail/:orderId" component={Login}></Route>
+                        </Common>
+                    }></Route>
                 </App>
             </HashRouter>
         )
