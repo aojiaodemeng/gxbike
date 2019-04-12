@@ -61,7 +61,23 @@ const menuList = [
         children: [
             {
                 title: '基础表格',
-                key: '/admin/table/basic',
+                key: '/admin/table/basic1',
+            },
+            {
+                title: '基础表格（mock数据）',
+                key: '/admin/table/basic2',
+            },
+            {
+                title: '表格嵌套单选按钮',
+                key: '/admin/table/basic3',
+            },
+            {
+                title: '表格嵌套多选按钮',
+                key: '/admin/table/basic4',
+            },
+            {
+                title: '表格（分页）',
+                key: '/admin/table/basic5',
             },
             {
                 title: '高级表格',
