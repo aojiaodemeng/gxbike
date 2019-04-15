@@ -23,6 +23,7 @@ import TableBasicPaging from './pages/table/basicTablePaging.js'
 import TableHigh from './pages/table/highTable.js'
 import City from './pages/city'
 import Order from './pages/order'
+import OrderDetail from './pages/order/detail'
 import NoMatch from './pages/noMatch'
 export default class IRouter extends React.Component{
     render(){
@@ -58,7 +59,7 @@ export default class IRouter extends React.Component{
                     }></Route>
                     <Route path="/common" render={() => 
                         <Common>
-                            <Route path="/common/order/detail/:orderId" component={Login}></Route>
+                            <Route path="/common/order/detail/:orderId" component={OrderDetail}></Route>
                         </Common>
                     }></Route>
                 </App>
