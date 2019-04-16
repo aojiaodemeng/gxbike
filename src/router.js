@@ -23,7 +23,9 @@ import TableBasicPaging from './pages/table/basicTablePaging.js'
 import TableHigh from './pages/table/highTable.js'
 import City from './pages/city'
 import Order from './pages/order'
-import OrderDetail from './pages/order/detail'
+import OrderDetail from './pages/order/detail.js'
+import User from './pages/user'
+
 import NoMatch from './pages/noMatch'
 export default class IRouter extends React.Component{
     render(){
@@ -53,6 +55,8 @@ export default class IRouter extends React.Component{
                                 <Route path="/admin/table/high" component={TableHigh}></Route>
                                 <Route path="/admin/city" component={City}></Route>
                                 <Route path="/admin/order" component={Order}></Route>
+                                <Route path="/admin/user" component={User}></Route>
+                                
                                 <Route component={NoMatch}/>
                             </Switch>
                         </Admin>

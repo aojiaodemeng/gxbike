@@ -1,43 +1,49 @@
 @import './default.less';
 @import './loading.less';
-
+body {
+  background: @colorL;
+  font-family: "Helvetica Neue For Number", "PingFang SC Light", "Heiti SC", "San Francisco", "Helvetica", Arial, sans-serif;
+}
 ul,li{
   list-style: none;
 }
 .clearfix{
-  &::after{
-    content:'';
-    clear: both;
-    display: block;
-    visibility: hidden;
+  &:after{
+    content:" ";
+    clear:both;
+    display:block;
+    visibility:hidden;
   }
 }
 .container{
-  display: flex;
-  .nav-left{
-    width: 15%;
-    min-width: 180px;
-    height: calc(100vh);
-    background-color: #001529;
-  }
-  .main{
-    flex:1;
-    height: calc(100vh);
-    background-color:@colorL;
-    overflow: auto;
-  }
-  .content{
-    position: relative;
-    padding: 20px;
-  }
+    .nav-left{
+        background-color:#001529;
+        color: #ffffff;
+        height: calc(100vh);
+    }
+    .main{
+        height: calc(100vh);
+        background-color: @colorL;
+        overflow: auto;
+    }
+    .content{
+        position: relative;
+        padding: 20px;
+    }
 }
 
 .content-wrap{
-  background:#fff;
-  border: 1px solid #e8e8e8;
-  margin-top: -3px;
-  .ant-table-wrapper{
-      margin-left: -1px;
-      margin-right: -1px;
-  }
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    margin-top: -3px;
+    .ant-table-wrapper{
+        margin-left: -1px;
+        margin-right: -2px;
+    }
+}
+
+.operate-wrap{
+    button{
+    margin-right: 10px;
+    }
 }

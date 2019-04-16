@@ -1,7 +1,36 @@
 import JsonP from 'jsonp'
 import axios from 'axios'
 import {Modal} from 'antd'
+import Utils from './../utils/utils.js'
+
 export default class Axios{
+
+    // 订单页面请求列表,真正与服务器对接时，将isMock参数相关代码去掉
+    static requestList(_this,url,params,isMock){
+        var data = {
+            params: params,
+            isMock
+        }
+        this.ajax({
+            url,
+            data
+        }).then((data) => {
+            if(data && data.result){
+                let list = data.result.item_list.map((item,index) => {
+                    item.key = index;
+                    return item;
+                });
+                _this.setState({
+                    list,
+                    pagination: Utils.pagination(data,(current) => {
+                        _this.params.page = current;
+                        _this.requestList()
+                    })
+                })
+            }
+        })
+    }
+
     static jsonp(options){
         return new Promise((resolve,reject) => {
             JsonP(options.url,{
@@ -34,8 +63,14 @@ export default class Axios{
             loading = document.getElementById('ajaxLoading');
             loading.style.display = 'block';
         }
+        let baseApi = '';
+        if(options.isMock){
+            baseApi='https://easy-mock.com/mock/5caeedf7085b936cbae82c66/gxbikeapi';
+        }else{
+            baseApi='https://easy-mock.com/mock/5caeedf7085b936cbae82c66/gxbikeapi';
+        }
         return new Promise((resolve,reject) => {
-            let baseApi='https://easy-mock.com/mock/5caeedf7085b936cbae82c66/gxbikeapi'
+            // let baseApi='https://easy-mock.com/mock/5caeedf7085b936cbae82c66/gxbikeapi';
             axios({
                 url:options.url,
                 method: 'get',

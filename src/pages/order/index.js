@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Button, Table, Form, Select, Modal, message,DatePicker } from 'antd'
 import axios from './../../axios'
 import Utils from './../../utils/utils'
-
+import BaseForm from './../../components/BaseForm'
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -13,6 +13,37 @@ export default class Order extends React.Component{
 	params = {
 		page: 1
 	}
+
+    // 这是是为了使用封装的baseForm-代码开始
+    formList = [
+        {
+            type:'SELECT',
+            label:'城市',
+            field:'city',
+            placeholder:'全部',
+            initialValue:'1',
+            width:100,
+            list: [{ id: '0', name: '全部' }, { id: '1', name: '北京' }, { id: '2', name: '天津' }, { id: '3', name: '上海' }]
+        },
+        {
+            type: '时间查询'
+        },
+        {
+            type: 'SELECT',
+            label: '订单状态',
+            field:'order_status',
+            placeholder: '全部',
+            initialValue: '1',
+            width: 120,
+            list: [{ id: '0', name: '全部' }, { id: '1', name: '进行中' }, { id: '2', name: '结束行程' }]
+        }
+    ]
+    handleFilter = (params) => {
+        this.params = params;
+        this.requestList();
+    }
+    // 这是是为了使用封装的baseForm-代码结束
+
 	componentDidMount(){
 		this.requestList()
 	}
@@ -67,27 +98,34 @@ export default class Order extends React.Component{
     }
 	requestList = () => {
 		let _this = this;
-		axios.ajax({
-			url:'/order/list',
-			data:{
-				params:{
-					page:this.params.page
-				}
-			},
-			isShowLoading:true
-		}).then((res) => {
-			let list = res.result.item_list.map((item,index) => {
-				item.key = index;
-				return item;
-			});
-			this.setState({
-				list,
-				pagination: Utils.pagination(res,(current) => {
-					_this.params.page = current;
-					this.requestList()
-				})
-			})
-		})
+
+        // 这里的代码是为了使用封装好的列表请求——代码开始
+        axios.requestList(this,'/order/list',this.params,true);
+        // 这里的代码是为了使用封装好的列表请求——代码结束
+
+
+        // 以下代码是不使用封装好的列表请求
+		// axios.ajax({
+		// 	url:'/order/list',
+		// 	data:{
+		// 		params:{
+		// 			page:this.params
+		// 		}
+		// 	},
+		// 	isShowLoading:true
+		// }).then((res) => {
+		// 	let list = res.result.item_list.map((item,index) => {
+		// 		item.key = index;
+		// 		return item;
+		// 	});
+		// 	this.setState({
+		// 		list,
+		// 		pagination: Utils.pagination(res,(current) => {
+		// 			_this.params.page = current;
+		// 			this.requestList()
+		// 		})
+		// 	})
+		// })
 	}
 	render(){
 		const columns = [
@@ -144,7 +182,7 @@ export default class Order extends React.Component{
 		return (
 			<div>
 				<Card>
-					<FilterForm/>
+                    <BaseForm formList={this.formList} filterSubmit={this.handleFilter} />
 				</Card>
 				<Card style={{marginTop: 10}}>
 					<Button type="primary" onClick={this.openOrderDetail}>订单详情</Button>
@@ -171,7 +209,8 @@ export default class Order extends React.Component{
 	}
 }
 
-// 定义表单，记住不要导出，一个文件只能有一个导出，并且表单定义最后要Form.create({})(*****)
+// 定义表单，记住不要导出，一个文件只能有一个导出，并且表单定义最后要Form.create({})(*****)；
+// 后面会用公用组件BaseForm代替，即用<BaseForm />代替成为<FilterForm />
 class FilterForm extends React.Component{
 
     render(){
@@ -209,7 +248,7 @@ class FilterForm extends React.Component{
                 </FormItem>
                 <FormItem label="订单状态">
                     {
-                        getFieldDecorator('op_mode')(
+                        getFieldDecorator('order_status')(
                             <Select
                                 style={{ width: 150 }}
                                 placeholder="全部"
