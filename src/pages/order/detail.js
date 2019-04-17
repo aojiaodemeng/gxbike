@@ -48,6 +48,7 @@ export default class Order extends React.Component{
 		map.addControl(new window.BMap.MapTypeControl({ anchor : window.BMAP_ANCHOR_TOP_LEFT}));
 		map.addControl(new window.BMap.NavigationControl({ anchor : window.BMAP_ANCHOR_TOP_RIGHT}));
 		map.addControl(new window.BMap.OverviewMapControl({ anchor : window.BMAP_ANCHOR_BOTTOM_RIGHT}));
+		map.enableScrollWheelZoom(true);
 	}
 	// 绘制用户的行驶路线
 	drawBikeRoute = (positionList) => {
