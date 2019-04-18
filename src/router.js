@@ -1,5 +1,5 @@
 import React from 'react'
-import {HashRouter,Route,Switch} from 'react-router-dom'
+import {HashRouter,Route,Switch,Redirect} from 'react-router-dom'
 import App from './App'
 import Home from './pages/home'
 import Admin from './admin'
@@ -29,49 +29,56 @@ import BikeMap from './pages/map'
 import Bar from './pages/echarts/bar'
 import Pie from './pages/echarts/pie'
 import Line from './pages/echarts/line'
+import Rich from './pages/rich'
+import Permission from './pages/permission'
 import NoMatch from './pages/noMatch'
 export default class IRouter extends React.Component{
     render(){
         return (
             <HashRouter>
                 <App>
-                    <Route path="/login" component={Login}></Route>
-                    <Route path="/admin" render={() =>
-                        <Admin>
-                            <Switch>
-                                <Route path="/admin/home" component={Home}></Route>
-                                <Route path="/admin/ui/buttons" component={UiButtons}></Route>
-                                <Route path="/admin/ui/modals" component={UiModals}></Route>
-                                <Route path="/admin/ui/loadings" component={UiLoading}></Route>
-                                <Route path="/admin/ui/notification" component={UiNotification}></Route>
-                                <Route path="/admin/ui/messages" component={UiMessages}></Route>
-                                <Route path="/admin/ui/tabs" component={UiTabs}></Route>
-                                <Route path="/admin/ui/gallery" component={UiGallery}></Route>
-                                <Route path="/admin/ui/carousel" component={UiCarousel}></Route>
-                                <Route path="/admin/form/login" component={FormLogin}></Route>
-                                <Route path="/admin/form/reg" component={FormRegister}></Route>
-                                <Route path="/admin/table/basic1" component={TableBasic}></Route>
-                                <Route path="/admin/table/basic2" component={TableBasicMock}></Route>
-                                <Route path="/admin/table/basic3" component={TableBasicRadio}></Route>
-                                <Route path="/admin/table/basic4" component={TableBasicCheckbox}></Route>
-                                <Route path="/admin/table/basic5" component={TableBasicPaging}></Route>
-                                <Route path="/admin/table/high" component={TableHigh}></Route>
-                                <Route path="/admin/city" component={City}></Route>
-                                <Route path="/admin/order" component={Order}></Route>
-                                <Route path="/admin/user" component={User}></Route>
-                                <Route path="/admin/bikeMap" component={BikeMap}></Route>
-                                <Route path="/admin/charts/bar" component={Bar}></Route>
-                                <Route path="/admin/charts/pie" component={Pie}></Route>
-                                <Route path="/admin/charts/line" component={Line}></Route>
-                                <Route component={NoMatch}/>
-                            </Switch>
-                        </Admin>
-                    }></Route>
-                    <Route path="/common" render={() => 
-                        <Common>
-                            <Route path="/common/order/detail/:orderId" component={OrderDetail}></Route>
-                        </Common>
-                    }></Route>
+                    <Switch>
+                        <Route path="/login" component={Login}></Route>
+                        <Route path="/common" render={() => 
+                            <Common>
+                                <Route path="/common/order/detail/:orderId" component={OrderDetail}></Route>
+                            </Common>
+                        }></Route>
+                        <Route path="/" render={() =>
+                            <Admin>
+                                <Switch>
+                                    <Route path="/home" component={Home}></Route>
+                                    <Route path="/ui/buttons" component={UiButtons}></Route>
+                                    <Route path="/ui/modals" component={UiModals}></Route>
+                                    <Route path="/ui/loadings" component={UiLoading}></Route>
+                                    <Route path="/ui/notification" component={UiNotification}></Route>
+                                    <Route path="/ui/messages" component={UiMessages}></Route>
+                                    <Route path="/ui/tabs" component={UiTabs}></Route>
+                                    <Route path="/ui/gallery" component={UiGallery}></Route>
+                                    <Route path="/ui/carousel" component={UiCarousel}></Route>
+                                    <Route path="/form/login" component={FormLogin}></Route>
+                                    <Route path="/form/reg" component={FormRegister}></Route>
+                                    <Route path="/table/basic1" component={TableBasic}></Route>
+                                    <Route path="/table/basic2" component={TableBasicMock}></Route>
+                                    <Route path="/table/basic3" component={TableBasicRadio}></Route>
+                                    <Route path="/table/basic4" component={TableBasicCheckbox}></Route>
+                                    <Route path="/table/basic5" component={TableBasicPaging}></Route>
+                                    <Route path="/table/high" component={TableHigh}></Route>
+                                    <Route path="/city" component={City}></Route>
+                                    <Route path="/order" component={Order}></Route>
+                                    <Route path="/user" component={User}></Route>
+                                    <Route path="/bikeMap" component={BikeMap}></Route>
+                                    <Route path="/charts/bar" component={Bar}></Route>
+                                    <Route path="/charts/pie" component={Pie}></Route>
+                                    <Route path="/charts/line" component={Line}></Route>
+                                    <Route path="/rich" component={Rich} ></Route>
+                                    <Route path="/permission" component={Permission}></Route>
+                                    <Redirect to="/home" />
+                                    // <Route component={NoMatch}/>
+                                </Switch>
+                            </Admin>
+                        }></Route>
+                    </Switch>
                 </App>
             </HashRouter>
         )

@@ -116,7 +116,7 @@ export default class Order extends React.Component{
             detailInfo: this.state.selectedItem
         });
     }
-    getRoleUserList = (id) => {
+    getRoleUserList = (id)=>{
         axios.ajax({
             url:'/role/user_list',
             data:{
@@ -126,7 +126,6 @@ export default class Order extends React.Component{
             }
         }).then((res)=>{
             if(res){
-                // 筛选目标用户
                 this.getAuthUserList(res.result);
             }
         })
@@ -213,7 +212,7 @@ export default class Order extends React.Component{
             <div>
                 <Card>
                     <Button type="primary" onClick={this.handleRole}>创建角色</Button>
-                    <Button type="primary" onClick={this.handlePermission}>设置权限</Button>
+                    <Button type="primary" onClick={this.handlePermission} style={{margin:'0 20px'}}>设置权限</Button>
                     <Button type="primary" onClick={this.handleUserAuth}>用户授权</Button>
                 </Card>           
                 <div className="content-wrap">
@@ -257,6 +256,7 @@ export default class Order extends React.Component{
                                 });
                             }}
                         />
+
                 </Modal>
                 <Modal
                        title="用户授权"
@@ -281,6 +281,9 @@ export default class Order extends React.Component{
         );
     }
 }
+
+
+
 
 // 角色创建
 class RoleForm extends React.Component{
@@ -319,6 +322,11 @@ class RoleForm extends React.Component{
 }
 RoleForm = Form.create({})(RoleForm);
 
+
+// PermEditForm组件的调用说明：
+// 父组件传递detailInfo、menuInfo值给子组件PermEditForm；
+// 并且传递方法patchMenuInfo方法给子组件，子组件接收到数据之后根据页面行为，
+// 通过接收到的patchMenuInfo方法通知父组件改变相应数据
 // 设置权限
 class PermEditForm extends React.Component {
     state = {};
@@ -326,6 +334,7 @@ class PermEditForm extends React.Component {
     onCheck = (checkedKeys) => {
         this.props.patchMenuInfo(checkedKeys);
     };
+    // 渲染可选的权限
     renderTreeNodes = (data,key='') => {
         return data.map((item) => {
             let parentKey = key+item.key;
@@ -335,6 +344,9 @@ class PermEditForm extends React.Component {
                         {this.renderTreeNodes(item.children,parentKey)}
                     </TreeNode>
                 );
+            // }else{
+            //     return <TreeNode {...item} />;
+            // }
             } else if (item.btnList) {
                 return (
                     <TreeNode title={item.title} key={parentKey} dataRef={item} className="op-role-tree">
@@ -343,6 +355,7 @@ class PermEditForm extends React.Component {
                 );
             }
             return <TreeNode {...item} />;
+            
         });
     };
 
