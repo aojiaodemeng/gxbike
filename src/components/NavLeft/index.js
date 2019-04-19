@@ -1,15 +1,37 @@
 import React from 'react'
 import { Menu } from 'antd'
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { switchMenu } from './../../redux/action'
 import './index.less'
 import MenuConfig from './../../config/menuConfig'
 
 const SubMenu = Menu.SubMenu;
-export default class NavLeft extends React.Component{
-    componentWillMount(){
-        const menuTreeNode = this.renderMenu(MenuConfig);
+class NavLeft extends React.Component{
+    state = {
+        currentKey: ''
+    }
+    // 菜单点击
+    handleClick = ({ item, key }) => {
+        if (key == this.state.currentKey) {
+            return false;
+        }
+        // 事件派发，自动调用reducer，通过reducer保存到store对象中
+        const { dispatch } = this.props;
+        dispatch(switchMenu(item.props.title));
 
         this.setState({
+            currentKey: key
+        });
+        // hashHistory.push(key);
+    };
+    componentWillMount(){
+        const menuTreeNode = this.renderMenu(MenuConfig);
+        // 哈希路由url路径中含有#（比如在console页面输入location.hash就会出现"#/permission"后面还有可能出现？****等内容）
+        let currentKey = window.location.hash.replace(/#|\?.*$/g,'');
+
+        this.setState({
+            currentKey,
             menuTreeNode
         })
     }
@@ -37,7 +59,9 @@ export default class NavLeft extends React.Component{
                     <h1>Imooc MS</h1>
                 </div>
                 <Menu
-                     theme="dark"
+                    onClick={this.handleClick}
+                    selectedKeys={this.state.currentKey}
+                    theme="dark"
                 >
                     {this.state.menuTreeNode}
                     {/*<SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>*/}
@@ -48,6 +72,7 @@ export default class NavLeft extends React.Component{
                     {/*</SubMenu>*/}
                 </Menu>
             </div>
-        )
+        );
     }
 }
+export default connect()(NavLeft);

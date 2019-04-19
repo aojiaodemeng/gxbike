@@ -121,7 +121,7 @@ export default class Order extends React.Component{
             url:'/role/user_list',
             data:{
                 params:{
-                    id:id
+                    id
                 }
             }
         }).then((res)=>{
