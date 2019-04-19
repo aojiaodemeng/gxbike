@@ -8,7 +8,9 @@ const Option = Select.Option;
 
 export default class Order extends React.Component{
 	state = {
-		dataSource:[]
+		dataSource:[],
+        orderConfirmVisble:false,
+        orderInfo:{}
 	}
 	params = {
 		page: 1
@@ -71,6 +73,7 @@ export default class Order extends React.Component{
     	// 打开新窗口
     	window.open(`/#/common/order/detail/${item.id}`,'_blank')
     }
+    // 订单结束确认
     handleConfirm = ()=>{
     	let item = this.state.selectedItem;
         if (!item) {
@@ -93,6 +96,26 @@ export default class Order extends React.Component{
                     orderInfo:res.result,
                     orderConfirmVisble: true
                 })
+            }
+        })
+    }
+    // 结束订单
+    handleFinishOrder = ()=>{
+        let item = this.state.selectedItem;
+        axios.ajax({
+            url: '/order/finish_order',
+            data: {
+                params: {
+                    orderId: item.id
+                }
+            }
+        }).then((res) => {
+            if (res.code == 0) {
+                message.success('订单结束成功')
+                this.setState({
+                    orderConfirmVisble: false
+                })
+                this.requestList();
             }
         })
     }
@@ -179,6 +202,10 @@ export default class Order extends React.Component{
           type:'radio',
           selectedRowKeys
         }
+        const formItemLayout = {
+            labelCol:{span:5},
+            wrapperCol:{span:19}
+        }
 		return (
 			<div>
 				<Card>
@@ -204,6 +231,32 @@ export default class Order extends React.Component{
                         pagination={this.state.pagination}
                     />
 				</div>
+                 <Modal
+                    title="结束订单"
+                    visible={this.state.orderConfirmVisble}
+                    onCancel={()=>{
+                        this.setState({
+                            orderConfirmVisble:false
+                        })
+                    }}
+                    onOk={this.handleFinishOrder}
+                    width={600}
+                >
+                    <Form layout="horizontal">
+                        <FormItem label="车辆编号" {...formItemLayout}>
+                            {this.state.orderInfo.bike_sn}
+                        </FormItem>
+                        <FormItem label="剩余电量" {...formItemLayout}>
+                            {this.state.orderInfo.battery + '%'}
+                        </FormItem>
+                        <FormItem label="行程开始时间" {...formItemLayout}>
+                            {this.state.orderInfo.start_time}
+                        </FormItem>
+                        <FormItem label="当前位置" {...formItemLayout}>
+                            {this.state.orderInfo.location}
+                        </FormItem>
+                    </Form>
+                </Modal>
 			</div>
 		);
 	}

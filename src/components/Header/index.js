@@ -6,7 +6,7 @@ import Axios from '../../axios'
 import { connect } from 'react-redux'
 class Header extends React.Component{
     state={
-        weather:'青砖多云'
+        weather:''
     }
     componentWillMount() {
         this.setState({
@@ -20,45 +20,16 @@ class Header extends React.Component{
         },1000)
         this.getWeatherAPIData();
     }
-    // getWeatherAPIData(){
-    //     let city='北京'
-    //     let options={
-    //         param:'Callback',
-    //         timeout:2000
-    //     }
-    //     let url='https://free-api.heweather.net/s6/weather/now?location=beijing&key=HE1903131026581080'
-    //     Axios.ajax({
-    //         url:'https://free-api.heweather.net/s6/weather/now?location=beijing&key=HE1903131026581080',
-    //         data:{
-    //             params:{}
-    //         }
-    //     }).then((res)=>{
-    //         console.log(res)
-    //     })
-    //     //注意要进行编码，encodeURIComponent(city)
-    //     // Axios.jsonp({
-    //     //     url:'https://free-api.heweather.net/s6/weather/now?location=beijing&key=HE1903131026581080'
-    //     // }).then((res) => {
-    //     //     if(res.status == 'ok'){
-    //     //         let data = res.results[0].weather_data[0];
-    //     //         this.setState({
-    //     //             dayPictureUrl:data.dayPictureUrl,
-    //     //             weather: data.weather
-    //     //         })
-    //     //     }
-    //     // })
-    //     // Axios.jsonp(url)
-    // }
      getWeatherAPIData(){
-        let city = '北京';
+        let city = '上海';
         Axios.jsonp({
-            // url:'https://free-api.heweather.net/s6/weather/now?location=beijing&key=HE1903131026581080'
             // url:'http://api.map.baidu.com/telematics/v3/weather?location=beijing&output=json&ak=3p49MVra6urFRGOT9s8UBWr2'
             url:'https://restapi.amap.com/v3/weather/weatherInfo?city='+encodeURIComponent(city)+'&output=json&key=463b61a9025bda2f8bd3ce4603d9b75c'
             // url:'http://api.map.baidu.com/telematics/v3/weather?location='+encodeURIComponent(city)+'&output=json&ak=3p49MVra6urFRGOT9s8UBWr2'
         }).then((res)=>{
             this.setState({
-                weather:res.weather
+                weather:res.weather,
+                temperature:res.temperature
             })
         })
     }
@@ -89,6 +60,8 @@ class Header extends React.Component{
                                 <span className="date">{this.state.sysTime}</span>
                                 <span className="weather-detail">
                                     {this.state.weather}
+                                    &nbsp;&nbsp;
+                                    {this.state.temperature}&#8451;
                                 </span>
                             </Col>
                         </Row>
