@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Table, Modal, Button, message, Badge } from 'antd';
 import axios from './../../axios/index'
 import Utils from './../../utils/utils';
-export default class BasicTable extends React.Component {
+export default class HighTable1 extends React.Component {
     state={}
     params = {
       page:1

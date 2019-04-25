@@ -62,7 +62,7 @@ export default class Axios{
                 url:options.url,
                 method: 'get',
                 baseURL: baseApi,
-                timeout:2000,
+                timeout:4000,
                 params:(options.data && options.data.params) || ''
             }).then((response) => {
                 if(options.data && options.data.isShowLoading !== false){

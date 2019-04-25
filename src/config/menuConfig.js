@@ -61,11 +61,31 @@ const menuList = [
         children: [
             {
                 title: '基础表格',
-                key: '/table/basic',
+                key: '/table/basic1',
+            },
+            {
+                title: '基础表格——mock',
+                key: '/table/basic2',
+            },
+            {
+                title: '基础表格——单选',
+                key: '/table/basic3',
+            },
+            {
+                title: '基础表格——多选',
+                key: '/table/basic4',
+            },
+            {
+                title: '基础表格——分页',
+                key: '/table/basic5',
             },
             {
                 title: '高级表格',
-                key: '/table/high',
+                key: '/table/high1',
+            },
+            {
+                title: '高级表格2',
+                key: '/table/high2',
             }
         ]
     },

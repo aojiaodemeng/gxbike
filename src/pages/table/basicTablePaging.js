@@ -121,54 +121,56 @@ export default class BasicTable extends React.Component{
       })
     })
     render(){
-        const columns = [{
-          title: 'id',
-          dataIndex: 'id',
-        }, {
-          title: '用户名',
-          dataIndex: 'userName',
-        }, {
-          title: '性别',
-          dataIndex: 'sex',
-          render(a){
-            return a == 1 ? '男' : '女';
-          }
-        }, {
-          title: '状态',
-          dataIndex: 'state',
-          render(a){
-            let config = {
-                '1':'咸鱼一条',
-                '2':'风华浪子',
-                '3':'交大才子',
-                '4':'百度FE',
-                '5':'创业者'
+        const columns = [
+          {
+            title: 'id',
+            dataIndex: 'id',
+          }, {
+            title: '用户名',
+            dataIndex: 'userName',
+          }, {
+            title: '性别',
+            dataIndex: 'sex',
+            render(a){
+              return a == 1 ? '男' : '女';
             }
-            return config[a];
-          }
-        }, {
-          title: '爱好',
-          dataIndex: 'interest',
-          render(a){
-            let config = {
-                '1':'游泳',
-                '2':'爬山',
-                '3':'追剧',
-                '4':'篮球',
-                '5':'跑步',
-                '6':'王者荣耀',
-                '7':'撩妹',
-                '8':'cosplay'
+          }, {
+            title: '状态',
+            dataIndex: 'state',
+            render(a){
+              let config = {
+                  '1':'咸鱼一条',
+                  '2':'风华浪子',
+                  '3':'交大才子',
+                  '4':'百度FE',
+                  '5':'创业者'
+              }
+              return config[a];
             }
-            return config[a];
+          }, {
+            title: '爱好',
+            dataIndex: 'interest',
+            render(a){
+              let config = {
+                  '1':'游泳',
+                  '2':'爬山',
+                  '3':'追剧',
+                  '4':'篮球',
+                  '5':'跑步',
+                  '6':'王者荣耀',
+                  '7':'撩妹',
+                  '8':'cosplay'
+              }
+              return config[a];
+            }
+          }, {
+            title: '生日',
+            dataIndex: 'birthday',
+          }, {
+            title: '地址',
+            dataIndex: 'address',
           }
-        }, {
-          title: '生日',
-          dataIndex: 'birthday',
-        }, {
-          title: '地址',
-          dataIndex: 'address',
-        }];
+        ];
         const {selectedRowKeys} = this.state;
         const rowSelection2 = {
           type:'checkbox',
