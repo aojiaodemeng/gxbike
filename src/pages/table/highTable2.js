@@ -15,7 +15,8 @@ export default class HighTable2 extends React.Component{
 		searchText: '',
 		columns1:[],
 		showBox:false,
-		scrollWidth: 1300
+		scrollWidth: 1300,
+		checkedList_fixed:''
 	}
 	toText = (dataIndex,a) => {
 		if (dataIndex == 'sex'){
@@ -86,12 +87,10 @@ export default class HighTable2 extends React.Component{
 				          title: 'id',
 				          dataIndex: 'id',
 				          width: 50,
-				          fixed: 'left'
 				        }, {
 				          title: '用户名',
 				          dataIndex: 'userName',
 				          width: 180,
-				          fixed: 'left',
 				          ...this.getColumnSearchProps('userName'),
 				        }, {
 				          title: '性别',
@@ -138,7 +137,7 @@ export default class HighTable2 extends React.Component{
 				        }, {
 				          title: '生日',
 				          dataIndex: 'birthday',
-				          width: 180
+				          width: 180,
 				        }, {
 				          title: '地址',
 				          dataIndex: 'address'
@@ -182,6 +181,17 @@ export default class HighTable2 extends React.Component{
 			        	value={this.state.checkedList}
 			        	onChange={this.onChange}
 			        />
+			        <hr style={{border: '1px dashed #e8e8e8'}}/>
+			        <Button type="primary" 
+			        	onClick={this.fixedChange}
+			        	style={{margin:'20px 0 10px 0'}}
+		        	>固定此列</Button>
+			        <br/>
+			        <CheckboxGroup  
+			        	options={this.state.checkedList}
+			        	value={this.state.checkedList_fixed}
+			        	onChange={this.onFixedChange}
+			        />
 				</div>
 			)
 		}else{
@@ -206,14 +216,13 @@ export default class HighTable2 extends React.Component{
 			indeterminate: false,
 			checkAll: true,
 			newColumns1:this.getNewColumns(list),
-			scrollWidth:__srcollWidth
+			scrollWidth:__srcollWidth,
 		})
 	}
+
 	// 更新列
 	getNewColumns = (list) => {
-
 		let __list = [];
-
 		this.state.columns1.map((item)=>{
 			if(list.indexOf(item.title)>-1){
 				// 注意__list.push(item)是浅拷贝，改变了原数组；__list.push({...item})是深拷贝
@@ -221,13 +230,11 @@ export default class HighTable2 extends React.Component{
 			}
 			return __list;
 		})
-
-
 		// 判断最后一列是否选中，如果未选中，需要去掉新的最后一列的宽度
-		if(__list[__list.length-1].width){
-			delete __list[__list.length-1].width;
-			console.log(__list[__list.length-1])
-
+		if(__list.length < this.state.columns1.length && __list.length>1){
+			if(__list[__list.length-1].width){
+				delete __list[__list.length-1].width;
+			}
 		}
 		// 判断该列是否是原来列中的非最后一列，并判断是否有设置width，如无，需要添加
 		for(let i=0;i<__list.length-1;i++){
@@ -246,16 +253,58 @@ export default class HighTable2 extends React.Component{
 	        checkedList,
 	        indeterminate: !!checkedList.length && (checkedList.length < this.state.plainOptions.length),
 	        checkAll: checkedList.length === this.state.plainOptions.length,
-	        newColumns1:this.getNewColumns(checkedList)
+	        newColumns1:this.getNewColumns(checkedList),
+	        checkedList_fixed:''
 	    });
 
 	}	
+	onFixedChange = (checkedList) => {
+		this.setState({
+			checkedList_fixed:checkedList
+		})
+	}
+	fixedChange = () => {
+		let __list = [];
+		let __list2 = [];
+		let __list_noWidth =[];
+		let len=this.state.checkedList_fixed.length;
+		if(len != this.state.checkedList.length && len>0){
+			this.state.columns1.map((item)=>{
+				if(this.state.checkedList_fixed.indexOf(item.title)>-1){
+					let list_fixed = {...item};
+					list_fixed.fixed = 'left';
+					if(item.width){
+						__list.push(list_fixed)
+					}else{
+						__list_noWidth={...item};
+					}
+				}else{
+					__list2.push({...item})
+				}
+			})
+			if(__list2[__list2.length-1].width){
+				__list_noWidth.width = __list2[__list2.length-1].width;
+				__list_noWidth.fixed = 'left';
+				__list.push(__list_noWidth)
+				delete __list2[__list2.length-1].width;
+			}
+			this.setState({
+				newColumns1:__list.concat(__list2),
+			})
+			console.log(__list.concat(__list2))
+		}else if(len==0 || len == this.state.checkedList.length){
+			this.setState({
+				newColumns1:this.getNewColumns(this.state.checkedList)
+			})
+		}	
+	}
 	onCheckAllChange = (e) => {
 	    this.setState({
 	    	checkedList: e.target.checked ? this.state.plainOptions : [],
 	        indeterminate: false,
 	        checkAll: e.target.checked,
-	        newColumns1:this.getNewColumns(e.target.checked ? this.state.plainOptions : [])
+	        newColumns1:this.getNewColumns(e.target.checked ? this.state.plainOptions : []),
+	        checkedList_fixed:''
 	    });
 	}
 
