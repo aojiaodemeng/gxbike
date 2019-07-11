@@ -254,7 +254,8 @@ export default class HighTable2 extends React.Component{
 	        indeterminate: !!checkedList.length && (checkedList.length < this.state.plainOptions.length),
 	        checkAll: checkedList.length === this.state.plainOptions.length,
 	        newColumns1:this.getNewColumns(checkedList),
-	        checkedList_fixed:''
+	        checkedList_fixed:'',
+	        newColumns1_const:this.getNewColumns(checkedList),
 	    });
 
 	}	
@@ -268,8 +269,9 @@ export default class HighTable2 extends React.Component{
 		let __list2 = [];
 		let __list_noWidth =[];
 		let len=this.state.checkedList_fixed.length;
+		let __col = this.state.newColumns1_const ? this.state.newColumns1_const : this.state.columns1;
 		if(len != this.state.checkedList.length && len>0){
-			this.state.columns1.map((item)=>{
+			__col.map((item)=>{
 				if(this.state.checkedList_fixed.indexOf(item.title)>-1){
 					let list_fixed = {...item};
 					list_fixed.fixed = 'left';
@@ -282,6 +284,8 @@ export default class HighTable2 extends React.Component{
 					__list2.push({...item})
 				}
 			})
+			
+
 			if(__list2[__list2.length-1].width){
 				__list_noWidth.width = __list2[__list2.length-1].width;
 				__list_noWidth.fixed = 'left';
@@ -291,20 +295,22 @@ export default class HighTable2 extends React.Component{
 			this.setState({
 				newColumns1:__list.concat(__list2),
 			})
-			console.log(__list.concat(__list2))
 		}else if(len==0 || len == this.state.checkedList.length){
+			console.log("重新")
 			this.setState({
 				newColumns1:this.getNewColumns(this.state.checkedList)
 			})
 		}	
 	}
 	onCheckAllChange = (e) => {
+		console.log(this.state.checkedList)
 	    this.setState({
 	    	checkedList: e.target.checked ? this.state.plainOptions : [],
 	        indeterminate: false,
 	        checkAll: e.target.checked,
 	        newColumns1:this.getNewColumns(e.target.checked ? this.state.plainOptions : []),
-	        checkedList_fixed:''
+	        checkedList_fixed:'',
+	        newColumns1_const:this.getNewColumns(e.target.checked ? this.state.plainOptions : []),
 	    });
 	}
 

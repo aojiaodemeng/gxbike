@@ -22,6 +22,7 @@ import TableBasicCheckbox from './pages/table/basicTableCheckbox.js'
 import TableBasicPaging from './pages/table/basicTablePaging.js'
 import TableHigh1 from './pages/table/highTable1.js'
 import TableHigh2 from './pages/table/highTable2.js'
+import ReactDataGrid from './pages/table/reactDataGrid.js'
 import City from './pages/city'
 import Order from './pages/order'
 import OrderDetail from './pages/order/detail.js'
@@ -66,6 +67,7 @@ export default class IRouter extends React.Component{
                                     <Route path="/table/basic5" component={TableBasicPaging}></Route>
                                     <Route path="/table/high2" component={TableHigh2}></Route>
                                     <Route path="/table/high1" component={TableHigh1}></Route>
+                                    <Route path="/table/reactDataGrid" component={ReactDataGrid}></Route>
                                     <Route path="/city" component={City}></Route>
                                     <Route path="/order" component={Order}></Route>
                                     <Route path="/user" component={User}></Route>

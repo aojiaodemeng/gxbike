@@ -86,6 +86,10 @@ const menuList = [
             {
                 title: '高级表格2',
                 key: '/table/high2',
+            },
+            {
+                title: 'react-data-grid',
+                key: '/table/reactDataGrid',
             }
         ]
     },

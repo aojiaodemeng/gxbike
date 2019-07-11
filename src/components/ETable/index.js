@@ -104,6 +104,8 @@ export default class ETable extends React.Component {
             });
         }
         const { selectedRowKeys } = this.props;
+        
+        // 设置默认值
         const rowSelection = {
             type: 'radio',
             selectedRowKeys,

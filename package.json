@@ -15,6 +15,7 @@
     "less-loader": "^4.1.0",
     "react": "^16.8.6",
     "react-app-rewired": "^2.1.1",
+    "react-data-grid": "^6.1.0",
     "react-dom": "^16.8.6",
     "react-draft-wysiwyg": "^1.13.2",
     "react-highlight-words": "^0.16.0",
